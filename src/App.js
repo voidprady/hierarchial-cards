@@ -11,22 +11,33 @@ class App extends Component {
         name : "first emp",
         team : "Tech",
         designation: "Manager",
-
+        eid : "EID001",
         children:[
           {
             name : "first child",
             team: "Tech",
-            designation : "SDE2"
+            designation : "SDE2",
+            eid : "EID001C1",
+            children:[
+              {
+                  name : "first child child",
+                  team : "Tech",
+                  designation : "intern",
+                  eid : "EID001C1C1"
+              }
+            ]
           },
           {
             name : "second child",
             team : "Tech",
-            designation: "SDE2"
+            designation: "SDE2",
+            eid : "EID001C2"
           },
           {
             name : "third child",
             team : "Tech",
-            designation: "SDE3"
+            designation: "SDE3",
+            eid : "EID001C3"
           }
         ]
       }
