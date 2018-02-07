@@ -20,14 +20,14 @@ class App extends Component {
         team : "Tech",
         designation: "Manager",
         eid : "EID001",
-        collapsed: false,
+        collapse: false,
         children:[
           {
             name : "first child",
             team: "Tech",
             designation : "SDE2",
             eid : "EID001C1",
-            collapsed: false,
+            collapse: true,
             // children:[
             //   {
             //       name : "first child child",
@@ -47,17 +47,24 @@ class App extends Component {
             name : "second child",
             team : "Tech",
             designation: "SDE2",
-            eid : "EID001C2"
+            eid : "EID001C2",
+            collapse: true,
           },
           {
             name : "third child",
             team : "Tech",
             designation: "SDE3",
-            eid : "EID001C3"
-
+            eid : "EID001C3",
+            collapse: true,
           }
         ]
       }
+  }
+
+  clickHandler = (id) => {
+    console.log(id);
+    let activeChilds = document.getElementsByClassName('childs active');
+    console.log(activeChilds);
   }
 
   render() {
@@ -67,7 +74,7 @@ class App extends Component {
           <h1 className="App-title">Organization Hierarchy</h1>
         </header>
         <div className="App-container">
-          <Card data = {this.state.data} />
+          <Card data = {this.state.data}/>
         </div>
       </div>
     );

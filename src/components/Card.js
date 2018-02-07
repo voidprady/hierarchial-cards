@@ -12,6 +12,8 @@ class Card extends Component {
       "endX" : 0,
       "endY" : 0
     }
+    this.getImmediateChildren(this.props.data);
+    this.getTotalChildren(this.props.data);
   }
 
 
@@ -22,11 +24,10 @@ class Card extends Component {
       const d2 = endEl.getBoundingClientRect();
       const startEl = document.getElementById(this.props.data.eid);
       const d1 = startEl.getBoundingClientRect();
-
-      console.log(d1.y,d1.height, d2.y);
+      // console.log(d1.y,d1.height, d2.y);
       this.setState({
-        startX : d1.x + (d1.width/2),
-        startY : d1.y + d1.height,
+        startX : d1.x + (d1.width/2) - dd.x,
+        startY : d1.y + d1.height - dd.y,
         endX : d2.x + (d2.width/2),
         endY : d2.y
       });
@@ -51,7 +52,7 @@ class Card extends Component {
 
   drawLines() {
     return (
-      <svg width='10px' height='15px'>
+      <svg id={this.props.data.eid+'-lines'}width='15px' height='15px'>
         <path d={'M'+this.state.startX+' '+this.state.startY+ 'L'+this.state.endX+' '+this.state.endY} stroke="orange" strokeWidth="2"/>
       </svg>
     )
@@ -59,9 +60,6 @@ class Card extends Component {
 
   render() {
     const props = this.props;
-
-    this.getImmediateChildren(props.data);
-    this.getTotalChildren(props.data);
 
     return (
       <div className="card-container">
@@ -84,10 +82,11 @@ class Card extends Component {
               </span>
             </div>
             <hr />
+            {props.data.children?<p><i className='fa fa-plus-circle'></i></p>:''}
           </div>
         </div>
         {props.data.children?this.drawLines():''}
-        <div className="childs" id={props.data.eid + '-childs'}>
+        <div className={props.data.collapse?"childs collapsed":"childs active"} id={props.data.eid + '-childs'}>
           {props.data.children? props.data.children.map(child => <Card key={child.name} data={child} />): ''}
         </div>
       </div>
