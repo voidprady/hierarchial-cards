@@ -26,14 +26,20 @@ class App extends Component {
             team: "Tech",
             designation : "SDE2",
             eid : "EID001C1",
-            children:[
-              {
-                  name : "first child child",
-                  team : "Tech",
-                  designation : "intern",
-                  eid : "EID001C1C1"
-              }
-            ]
+            // children:[
+            //   {
+            //       name : "first child child",
+            //       team : "Tech",
+            //       designation : "intern",
+            //       eid : "EID001C1C1"
+            //   },
+            //   {
+            //       name : "second child child",
+            //       team : "Tech",
+            //       designation : "intern",
+            //       eid : "EID001C1C2"
+            //   }
+            // ]
           },
           {
             name : "second child",
