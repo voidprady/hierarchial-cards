@@ -23,13 +23,16 @@ const Card = (props) => {
   getTotalChildren(props.data);
 
   return (
-    <div id={props.data.eid}>
+    <div className='card-container'>
     <div className='card'>
-    <h4 className='card-header'>{props.data.team}</h4>
+    <p className='card-title'>{props.data.team}</p>
     <div className='card-body'>
-    <p>{props.data.name}</p>
+    <p className='card-name'>{props.data.name}</p>
+    <p>{props.data.designation}</p>
+    <p>
     <span><i className="fa fa-users"></i>  {immediateChildren} </span>
     <span><i className="fa fa-users"></i>  {totalChildren} </span>
+    </p>
     </div>
     </div>
     <div  className='childs'>{props.data.children?props.data.children.map((child)=> <Card key={child.name} data ={child} />):''}</div>

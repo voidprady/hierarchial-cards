@@ -4,6 +4,14 @@ import WebFont from 'webfontloader';
 import 'font-awesome/css/font-awesome.min.css';
 import Card from './components/Card';
 
+WebFont.load({
+  google: {
+    families : [
+      'Titillium Web:300,400,700',
+      'Encode Sans Expanded:300,400,700'
+    ]
+  }
+})
 
 class App extends Component {
   state = {
