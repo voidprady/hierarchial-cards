@@ -1,58 +1,98 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Card = (props) => {
-  let immediateChildren = 0;
-  let totalChildren = 0;
-  let childCards = '';
-  const getImmediateChildren = (root) => {
-    if(root.children && Array.isArray(root.children)){
-      immediateChildren =  root.children.length;
+class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.immediateChildren = 0;
+    this.totalChildren = 0;
+    this.childCards = '';
+    this.state = {
+      "startX" : 0,
+      "startY" : 0,
+      "endX" : 0,
+      "endY" : 0
     }
   }
 
-  const getTotalChildren = (root) => {
-    if(root.children && Array.isArray(root.children)){
-      totalChildren += root.children.length;
-      root.children.forEach((child) => {
-        getTotalChildren(child);
-      })
+
+  componentDidMount() {
+    const endEl = document.getElementById(this.props.data.eid+'-childs');
+
+    if(endEl){
+      const d2 = endEl.getBoundingClientRect();
+      const startEl = document.getElementById(this.props.data.eid);
+      const d1 = startEl.getBoundingClientRect();
+
+      console.log(d1.y,d1.height, d2.y);
+      this.setState({
+        startX : d1.x + (d1.width/2),
+        startY : d1.y + d1.height,
+        endX : d2.x + (d2.width/2),
+        endY : d2.y
+      });
+    }
+
+  }
+
+  getImmediateChildren = root => {
+    if (root.children && Array.isArray(root.children)) {
+      this.immediateChildren = root.children.length;
+    }
+  };
+
+  getTotalChildren(root) {
+    if (root.children && Array.isArray(root.children)) {
+      this.totalChildren += root.children.length;
+      root.children.forEach(child => {
+        this.getTotalChildren.call(this, child);
+      });
     }
   }
 
-  const getCardPosition = () => {
-    let parentCard = document.getElementById(props.data.eid);
-    console.log(parentCard);
-    // let centerX = parentCard.offsetLeft + parentCard.offsetWidth / 2;
-    // let centerY = parentCard.offsetTop + parentCard.offsetHeight;
-    // console.log(centerX, centerY);
+  drawLines() {
+    return (
+      <svg width='10px' height='15px'>
+        <path d={'M'+this.state.startX+' '+this.state.startY+ 'L'+this.state.endX+' '+this.state.endY} stroke="orange" strokeWidth="2"/>
+      </svg>
+    )
   }
 
-  getImmediateChildren(props.data);
-  getTotalChildren(props.data);
-  getCardPosition();
+  render() {
+    const props = this.props;
 
-  return (
-    <div className='card-container'>
-      <div className='card' id={props.data.eid}>
-        <p className='card-title'>{props.data.team}</p>
-        <div className='card-body'>
-          <div className='card-main'>
-            <p>{props.data.name}</p>
-            <p>{props.data.designation}</p>
+    this.getImmediateChildren(props.data);
+    this.getTotalChildren(props.data);
+
+    return (
+      <div className="card-container">
+        <div className="card" id={props.data.eid}>
+          <p className="card-title">{props.data.team}</p>
+          <div className="card-body">
+            <div className="card-main">
+              <p>{props.data.name}</p>
+              <p>{props.data.designation}</p>
+            </div>
+            <hr />
+            <div className="card-sub">
+              <span>
+                <i className="fa fa-sitemap" />
+                <p>{this.immediateChildren}</p>
+              </span>
+              <span>
+                <i className="fa fa-user" />
+                <p>{this.totalChildren}</p>
+              </span>
+            </div>
+            <hr />
           </div>
-          <hr/>
-          <div className='card-sub'>
-            <span><i className="fa fa-sitemap"></i><p>{immediateChildren}</p></span><span><i className="fa fa-user"></i><p>{totalChildren}</p></span>
-          </div>
-          <hr/>
+        </div>
+        {props.data.children?this.drawLines():''}
+        <div className="childs" id={props.data.eid + '-childs'}>
+          {props.data.children? props.data.children.map(child => <Card key={child.name} data={child} />): ''}
         </div>
       </div>
-      <svg width='20px' height='20px'>
-      <path d='m15 0 l0 15' stroke='black' strokeWidth='2'/>
-      </svg>
-      <div  className='childs' id={props.data.eid+'-childs'}>{props.data.children?props.data.children.map((child)=> <Card key={child.name} data ={child} />):''}</div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Card;

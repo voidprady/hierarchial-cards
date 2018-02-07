@@ -22,7 +22,6 @@
 }
 .card-container {
   width: 100%;
-  -webkit-border-vertical-spacing: 50px;
   -webkit-border-horizontal-spacing: 35px;
 }
 .card{
@@ -60,6 +59,10 @@ svg{
   border-right : 2px solid grey;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+.card-body>p{
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .card-main>p{
   margin-top: 0px;

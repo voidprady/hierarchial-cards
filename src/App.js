@@ -20,12 +20,14 @@ class App extends Component {
         team : "Tech",
         designation: "Manager",
         eid : "EID001",
+        collapsed: false,
         children:[
           {
             name : "first child",
             team: "Tech",
             designation : "SDE2",
             eid : "EID001C1",
+            collapsed: false,
             // children:[
             //   {
             //       name : "first child child",
@@ -52,6 +54,7 @@ class App extends Component {
             team : "Tech",
             designation: "SDE3",
             eid : "EID001C3"
+
           }
         ]
       }
